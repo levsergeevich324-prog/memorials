@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
+  <title>Карелина Миля Илларионовна - память</title>
+  
+  <!-- Подключение шрифтов Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ===== ЗВЁЗДНОЕ НЕБО ===== */
+    @keyframes starPulse {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    /* Эффект свечи */
+    @keyframes candleFlicker {
+      0%, 100% { 
+        opacity: 0.3;
+        transform: scale(1);
+      }
+      25% { 
+        opacity: 0.5;
+        transform: scale(1.02);
+      }
+      50% { 
+        opacity: 0.8;
+        transform: scale(1.05);
+        box-shadow: 0 0 150px rgba(255, 150, 50, 0.6);
+      }
+      75% { 
+        opacity: 0.4;
+        transform: scale(1.02);
+      }
+    }
+
+    @keyframes sparkleFly {
+      0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      background: #0a0c12;
+      color: #eaeef2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Звёздный фон */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse at bottom, #0a0c12 0%, #030405 100%);
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+      animation: starPulse 4s infinite ease-in-out;
+      display: block;
+      z-index: 1;
+    }
+
+    /* Эффект свечи */
+    .candle-effect {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      background: radial-gradient(circle at center, rgba(255, 150, 50, 0.08) 0%, transparent 70%);
+    }
+
+    .candle-effect.active {
+      opacity: 1;
+      animation: candleFlicker 3s infinite ease-in-out;
+    }
+
+    /* Счетчик свечей */
+    .candle-counter {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(20, 30, 40, 0.85);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border-radius: 40px;
+      padding: 10px 20px;
+      border: 1px solid rgba(255, 150, 50, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .counter-icon {
+      font-size: 22px;
+      animation: gentleFlicker 2s infinite ease-in-out;
+    }
+
+    @keyframes gentleFlicker {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); text-shadow: 0 0 10px rgba(255, 150, 50, 0.5); }
+    }
+
+    .counter-text {
+      font-family: 'EB Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: #ffb347;
+      min-width: 30px;
+      text-align: center;
+    }
+
+    /* Контейнер для кнопки */
+    .candle-button-container {
+      text-align: center;
+      margin: 30px 0 20px;
+      padding: 20px 0;
+    }
+
+    /* Кнопка зажечь свечу */
+    .candle-button {
+      background: linear-gradient(135deg, rgba(40, 25, 15, 0.9) 0%, rgba(60, 30, 10, 0.9) 100%);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border: 2px solid rgba(255, 150, 50, 0.3);
+      border-radius: 60px;
+      padding: 15px 40px;
+      display: inline-flex;
+      align-items: center;
+      gap: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .candle-button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 150, 50, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .candle-button:hover {
+      border-color: rgba(255, 150, 50, 0.8);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(255, 150, 50, 0.15);
+    }
+
+    .candle-button:hover::before {
+      width: 350px;
+      height: 350px;
+    }
+
+    .candle-button:active {
+      transform: translateY(-1px);
+    }
+
+    .candle-button-icon {
+      font-size: 26px;
+      animation: gentleFlicker 2s infinite ease-in-out;
+      position: relative;
+      z-index: 2;
+    }
+
+    .candle-button-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: #ffb347;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Плавающие искорки */
+    .candle-spark {
+      position: fixed;
+      pointer-events: none;
+      z-index: 50;
+      font-size: 18px;
+      animation: sparkleFly 2s ease-out forwards;
+      filter: drop-shadow(0 0 5px rgba(255, 150, 50, 0.8));
+    }
+
+    /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+    .wrap {
+      width: 100%;
+      max-width: 1000px;
+      position: relative;
+      z-index: 20;
+      margin: 20px;
+      padding: 0;
+    }
+
+    .card {
+      background: rgba(10, 14, 19, 0.8);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border-radius: 28px;
+      padding: 40px 35px;
+      border: 1px solid rgba(210, 220, 235, 0.15);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 25;
+      width: 100%;
+    }
+
+    /* ШАПКА */
+    header {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      margin-bottom: 35px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid rgba(200, 215, 230, 0.15);
+      flex-wrap: wrap;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex: 0 0 120px;
+      border: 2px solid rgba(230, 240, 250, 0.3);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(30%) brightness(0.95);
+    }
+
+    .header-text {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 4vw, 32px);
+      font-weight: 500;
+      color: #ffffff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      line-height: 1.2;
+    }
+
+    .dates {
+      font-family: 'EB Garamond', serif;
+      color: #c8d9ec;
+      margin-top: 10px;
+      font-size: clamp(16px, 3vw, 18px);
+      font-style: italic;
+      border-bottom: 1px dashed #6a85a0;
+      display: inline-block;
+      padding-bottom: 6px;
+      position: relative;
+      cursor: help;
+    }
+
+    .dates::after {
+      content: "1935 - настоящий год рождения";
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-5px);
+      background: rgba(20, 30, 45, 0.95);
+      color: #d8ecff;
+      padding: 8px 16px;
+      border-radius: 24px;
+      font-size: 14px;
+      white-space: nowrap;
+      border: 1px solid rgba(170, 200, 230, 0.4);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .dates:hover::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* БИОГРАФИЯ */
+    .bio {
+      margin-bottom: 40px;
+    }
+
+    .bio p {
+      font-size: clamp(16px, 2.5vw, 18px);
+      color: #ecf0f5;
+      margin-bottom: 15px;
+      text-align: left;
+      line-height: 1.7;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+
+    /* ВИДЕО И QR */
+    .media {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 25px;
+      margin-bottom: 45px;
+    }
+
+    .video-wrapper {
+      background: #000000;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #3e5266;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      width: 100%;
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-height: 400px;
+    }
+
+    .qr-section {
+      background: rgba(20, 28, 36, 0.75);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .qr-frame {
+      display: inline-block;
+      padding: 8px;
+      background: rgba(25, 35, 50, 0.85);
+      border-radius: 16px;
+      border: 1px solid rgba(100, 150, 200, 0.3);
+    }
+
+    .qr-frame img {
+      display: block;
+      width: 130px;
+      height: 130px;
+      max-width: 100%;
+      opacity: 0.95;
+    }
+
+    /* КООРДИНАТЫ */
+    .coordinates-section {
+      background: rgba(20, 35, 50, 0.55);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border-radius: 24px;
+      padding: 25px 30px;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      border: 1px solid rgba(190, 210, 230, 0.2);
+      flex-wrap: wrap;
+    }
+
+    .coordinates-icon {
+      font-size: 40px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .coordinates-content {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .coordinates-title {
+      font-family: 'EB Garamond', serif;
+      margin: 0 0 8px 0;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: #d8ecff;
+    }
+
+    .coordinates-display {
+      background: rgba(10, 15, 22, 0.7);
+      padding: 12px 16px;
+      border-radius: 40px;
+      display: inline-flex;
+      margin-bottom: 12px;
+      border: 1px solid rgba(200, 225, 250, 0.2);
+    }
+
+    .coord {
+      font-family: 'EB Garamond', monospace;
+      font-size: clamp(16px, 3vw, 20px);
+      color: #ffffff;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px rgba(150, 200, 255, 0.5);
+    }
+
+    .coord-sep {
+      font-size: clamp(18px, 3.5vw, 24px);
+      color: #9bc3eb;
+      margin: 0 5px;
+    }
+
+    .coordinates-caption {
+      margin: 8px 0 15px 0;
+    }
+
+    .caption-text {
+      font-family: 'Great Vibes', cursive;
+      font-size: 22px;
+      color: #cde1f2;
+      border-bottom: 1px dotted #6d8eaa;
+      padding-bottom: 4px;
+    }
+
+    .coordinates-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(60, 90, 120, 0.5);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-size: 16px;
+      border: 1px solid rgba(200, 225, 250, 0.3);
+      margin-top: 10px;
+    }
+
+    .coordinates-button:hover {
+      background: rgba(80, 120, 160, 0.7);
+      transform: translateY(-2px);
+    }
+
+    /* ПОДВАЛ */
+    footer {
+      margin-top: 30px;
+      padding-top: 25px;
+      border-top: 1px solid rgba(200, 220, 240, 0.1);
+    }
+
+    .memorial-message {
+      text-align: center;
+      padding: 18px 20px;
+      background: rgba(70, 90, 110, 0.2);
+      border-radius: 16px;
+      border-left: 3px solid #aac8e0;
+      border-right: 3px solid #aac8e0;
+      margin-bottom: 20px;
+    }
+
+    .message-text {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(22px, 4vw, 28px);
+      color: #ffffff;
+      line-height: 1.4;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      color: #b4cce3;
+      font-size: 14px;
+      font-style: italic;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .memorial-sign {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #c8def5;
+    }
+
+    /* АДАПТАЦИЯ */
+    @media screen and (max-width: 750px) {
+      .media { grid-template-columns: 1fr; }
+      .candle-counter { top: 10px; right: 10px; padding: 8px 15px; }
+    }
+
+    @media screen and (max-width: 480px) {
+      .card { padding: 20px 15px; }
+      header { flex-direction: column; text-align: center; }
+      .candle-button { padding: 12px 25px; }
+      .candle-button-text { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ЗВЁЗДНОЕ НЕБО -->
+  <div class="stars" id="stars"></div>
+  
+  <!-- ЭФФЕКТ СВЕЧИ -->
+  <div class="candle-effect" id="candleEffect"></div>
+  
+  <!-- СЧЕТЧИК ЗАЖЖЕННЫХ СВЕЧЕЙ -->
+  <div class="candle-counter" id="candleCounter">
+    <span class="counter-icon">🕯️</span>
+    <span class="counter-text" id="counterText">0</span>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      
+      <!-- ШАПКА С ФОТО -->
+      <header>
+        <div class="avatar">
+          <img id="photo" src="photo.jpg" alt="Фотография Мили Илларионовны">
+        </div>
+        <div class="header-text">
+          <h1 id="name">Карелина Миля Илларионовна</h1>
+          <div class="dates" id="dates">1936 - 2013</div>
+        </div>
+      </header>
+
+      <!-- БИОГРАФИЯ -->
+      <section class="bio" id="bio">
+        <p>Родилась в 1935 году. Её жизнь пришлась на непростые годы, но она сохранила доброту, достоинство и умение радоваться простым вещам. Работала, растила детей, стала опорой для внуков, буквально жила ради них работая даже на пенсии. Её помнят как человека с тихим голосом, мудрым взглядом и открытым сердцем.</p>
+      </section>
+
+      <!-- ВИДЕО И QR -->
+      <section class="media">
+        <div class="video-wrapper">
+          <video id="video" 
+                 controls 
+                 playsinline 
+                 preload="auto"
+                 muted 
+                 autoplay 
+                 loop>
+            <source src="https://github.com/levsergeevich324-prog/mem/raw/main/video.mp4" type="video/mp4">
+            Ваш браузер не поддерживает видео.
+          </video>
+        </div>
+        
+        <div class="qr-section">
+          <div class="qr-frame"> 
+            <img src="https://github.com/levsergeevich324-prog/mem/raw/main/qr2.png" alt="QR-код страницы памяти">
+          </div>
+        </div>     
+      </section>
+
+      <!-- КООРДИНАТЫ МОГИЛЫ -->
+      <section class="coordinates-section"> 
+        <div class="coordinates-icon">🕊️</div>
+        <div class="coordinates-content">
+          <h3 class="coordinates-title">Место упокоения</h3>
+          <div class="coordinates-display">
+            <span class="coord">59.157658</span>
+            <span class="coord-sep">,</span>
+            <span class="coord">39.910106</span>
+          </div>
+          <div class="coordinates-caption">
+            <span class="caption-text">Земля, хранящая тепло рук...</span>
+          </div>
+          <a href="https://yandex.ru/maps/?ll=39.910106,59.157658&z=16&pt=39.910106,59.157658" 
+             target="_blank" 
+             class="coordinates-button">
+            <span class="button-icon">🗺️</span>
+            Открыть на карте
+          </a>
+        </div>
+      </section>
+
+      <!-- КНОПКА ЗАЖЕЧЬ СВЕЧУ -->
+      <div class="candle-button-container">
+        <button class="candle-button" id="candleButton">
+          <span class="candle-button-icon">🕯️</span>
+          <span class="candle-button-text">Зажечь свечу</span>
+        </button>
+      </div>
+
+      <!-- ПОДВАЛ С ПАМЯТНЫМИ СЛОВАМИ -->
+      <footer>
+        <div class="memorial-message">
+          <p class="message-text">"Когда уходят хорошие люди, на небе зажигается новая звезда. Теперь их стало больше, а нам светлее..."</p>
+        </div>
+        <div class="footer-bottom">
+          <span class="memorial-sign">вечная память</span>
+          <span>Страница создана близкими</span>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <script>
+    // ===== ГЕНЕРАЦИЯ ЗВЁЗДНОГО НЕБА =====
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      
+      if (!starsContainer) return;
+      
+      starsContainer.innerHTML = '';
+      
+      const isMobile = window.innerWidth <= 480;
+      const starCount = isMobile ? 200 : 350;
+      const bigStarCount = isMobile ? 15 : 30;
+      
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        const size = Math.random() * 3 + 1;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        
+        star.style.animationDelay = Math.random() * 8 + 's';
+        star.style.animationDuration = Math.random() * 5 + 3 + 's';
+        
+        const brightness = Math.random() * 0.6 + 0.3;
+        star.style.opacity = brightness;
+        star.style.boxShadow = `0 0 ${Math.random() * 8 + 3}px rgba(255, 255, 255, ${brightness})`;
+        
+        starsContainer.appendChild(star);
+      }
+      
+      for (let i = 0; i < bigStarCount; i++) {
+        const bigStar = document.createElement('div');
+        bigStar.className = 'star';
+        const size = Math.random() * 5 + 2;
+        bigStar.style.width = size + 'px';
+        bigStar.style.height = size + 'px';
+        bigStar.style.left = Math.random() * 100 + '%';
+        bigStar.style.top = Math.random() * 100 + '%';
+        bigStar.style.animationDelay = Math.random() * 8 + 's';
+        bigStar.style.animationDuration = Math.random() * 6 + 4 + 's';
+        bigStar.style.opacity = Math.random() * 0.7 + 0.2;
+        bigStar.style.boxShadow = `0 0 ${Math.random() * 12 + 8}px rgba(200, 220, 255, 0.8)`;
+        starsContainer.appendChild(bigStar);
+      }
+    }
+
+    // Данные
+    const defaults = {
+      name: "Карелина Миля Илларионовна",
+      dates: "1936 - 2013",
+      bio: "<p>Родилась в 1935 году. Её жизнь пришлась на непростые годы, но она сохранила доброту, достоинство и умение радоваться простым вещам. Работала, растила детей, стала опорой для внуков, буквально жила ради них работая даже на пенсии. Её помнят как человека с тихим голосом, мудрым взглядом и открытым сердцем.</p>",
+      photo: "photo.jpg",
+      video: "https://github.com/levsergeevich324-prog/mem/raw/main/video.mp4"
+    };
+
+    // Настройка видео
+    function setupVideo(videoElement) {
+      if (!videoElement) return;
+      
+      videoElement.muted = true;
+      videoElement.loop = true;
+      videoElement.autoplay = true;
+      videoElement.playsInline = true;
+      videoElement.preload = 'auto';
+      
+      const playPromise = videoElement.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.log('Автовоспроизведение не удалось:', error);
+          videoElement.controls = true;
+        });
+      }
+    }
+
+    // Установка контента
+    function setContent() {
+      const nameEl = document.getElementById('name');
+      const datesEl = document.getElementById('dates');
+      const bioEl = document.getElementById('bio');
+      const photoEl = document.getElementById('photo');
+      const videoEl = document.getElementById('video');
+      
+      if (nameEl) nameEl.textContent = defaults.name;
+      if (datesEl) datesEl.textContent = defaults.dates;
+      if (bioEl) bioEl.innerHTML = defaults.bio;
+      
+      if (photoEl) {
+        photoEl.src = defaults.photo;
+      }
+
+      if (videoEl) {
+        const sourceEl = videoEl.querySelector('source');
+        if (sourceEl) {
+          sourceEl.src = defaults.video;
+        }
+        videoEl.load();
+        setupVideo(videoEl);
+      }
+    }
+
+    // ===== ФУНКЦИОНАЛ ЗАЖЖЕНИЯ СВЕЧИ =====
+    function initCandleFeature() {
+      const candleButton = document.getElementById('candleButton');
+      const candleEffect = document.getElementById('candleEffect');
+      const counterText = document.getElementById('counterText');
+      
+      if (!candleButton || !candleEffect || !counterText) return;
+      
+      // Загружаем сохраненное количество свечей
+      let candleCount = localStorage.getItem('candleCount') ? 
+                        parseInt(localStorage.getItem('candleCount')) : 0;
+      
+      // Обновляем счетчик
+      counterText.textContent = candleCount;
+      
+      // Эффект свечи активен, если есть хотя бы одна свеча
+      if (candleCount > 0) {
+        candleEffect.classList.add('active');
+      }
+      
+      // Функция создания искорок
+      function createSparks() {
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            const spark = document.createElement('div');
+            spark.className = 'candle-spark';
+            spark.innerHTML = '✨';
+            spark.style.left = Math.random() * 100 + '%';
+            spark.style.top = Math.random() * 100 + '%';
+            spark.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            spark.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
+            document.body.appendChild(spark);
+            
+            setTimeout(() => {
+              spark.remove();
+            }, 2000);
+          }, i * 100);
+        }
+      }
+      
+      // Обработчик клика на кнопку
+      candleButton.addEventListener('click', function() {
+        // Увеличиваем счетчик
+        candleCount++;
+        counterText.textContent = candleCount;
+        
+        // Сохраняем в localStorage
+        localStorage.setItem('candleCount', candleCount);
+        
+        // Активируем эффект свечи
+        candleEffect.classList.add('active');
+        
+        // Анимация кнопки
+        candleButton.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          candleButton.style.transform = 'scale(1)';
+        }, 200);
+        
+        // Создаем искорки
+        createSparks();
+        
+        // Вибрация на мобильных (если поддерживается)
+        if (navigator.vibrate) {
+          navigator.vibrate(50);
+        }
+      });
+      
+      // Добавляем обработчик для сброса (по двойному клику на счетчик)
+      const candleCounter = document.querySelector('.candle-counter');
+      if (candleCounter) {
+        candleCounter.addEventListener('dblclick', function() {
+          candleCount = 0;
+          counterText.textContent = '0';
+          localStorage.setItem('candleCount', '0');
+          candleEffect.classList.remove('active');
+          
+          // Эффект затухания
+          candleEffect.style.opacity = '0';
+          setTimeout(() => {
+            candleEffect.style.opacity = '';
+          }, 500);
+        });
+      }
+    }
+
+    // ===== ЗАПУСК =====
+    document.addEventListener('DOMContentLoaded', function() {
+      setContent();
+      createStars();
+      initCandleFeature();
+    });
+
+    // Обновление звезд при изменении размера окна
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        createStars();
+      }, 200);
+    });
+  </script>
+</body>
+</html>
